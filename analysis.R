@@ -86,8 +86,6 @@ ggplot(data = x, aes_string(x = x$p, y = test$nfl_yards_game)) +
    ylab("Out of Sample PPR Fantasy Points Per Game") +
    labs(title = paste(round(r_squared, 3), "out of sample r-squared"))
 
-ggsave("oos_plot.png")
-
 ### Let's look at feature importance of these stacked models. -------------------------------------
 test_importance <- test %>%
    select(-nfl_yards_game)
@@ -97,11 +95,7 @@ predictor = Predictor$new(stacked_models, data = test_importance, y = test$nfl_y
 imp_mse = FeatureImp$new(predictor, loss = "mse")
 plot(imp_mse)
 
-ggsave("mse.png")
-
 ### Now mean absolute error -----------------------------------------------------------------------
 predictor2 = Predictor$new(stacked_models, data = test_importance, y = test$nfl_yards_game)
 imp_mae = FeatureImp$new(predictor2, loss = "mae")
 plot(imp_mae)
-
-ggsave("mae.png")
