@@ -1,6 +1,6 @@
 ### -----------------------------------------------------------------------------------------------
-### Code testing the predictive power of various CFB metrics with career yards per game, targets
-### per game and career fantasy points per game as the target variables.
+### Code testing the predictive power of various CFB metrics with career yards per game
+### as the target variable.
 ### -----------------------------------------------------------------------------------------------
 
 library("tidyverse")
@@ -83,7 +83,7 @@ ggplot(data = x, aes_string(x = x$p, y = test$nfl_yards_game)) +
       fill = '#ededed'
    ) +
    xlab("Ensemble Model Predict") +
-   ylab("Out of Sample PPR Fantasy Points Per Game") +
+   ylab("Out of Sample NFL Yards per Game") +
    labs(title = paste(round(r_squared, 3), "out of sample r-squared"))
 
 ### Let's look at feature importance of these stacked models. -------------------------------------
