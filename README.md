@@ -4,7 +4,7 @@ The out-of-sample predict is pretty garbage. There are probably way to get incre
 improvement with depth of target and route type data but this is typical and generally
 state of the art.
 
-![alt text](https://github.com/friscojosh/market-share/blob/master/oos_plot.png "")
+![alt text](https://github.com/friscojosh/market-share/blob/master/oos-plot.png "")
 
 Here is the first of two feature importance plots. This one measures the loss in performance
 when a feature is removed using mean squared error.
