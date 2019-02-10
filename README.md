@@ -1,5 +1,4 @@
-Testing the predictiveness of share of college receiving yards,
-speed score and other metrics in a four model ensemble.
+Testing the predictive power of various CFB metrics with career yards per game as the target variable.
 
 The out-of-sample predict is pretty garbage. There are probably way to get incremental
 improvement with depth of target and route type data but this is typical and generally
