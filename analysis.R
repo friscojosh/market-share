@@ -97,7 +97,11 @@ predictor = Predictor$new(stacked_models, data = test_importance, y = test$nfl_y
 imp_mse = FeatureImp$new(predictor, loss = "mse")
 plot(imp_mse)
 
+ggsave("mse.png")
+
 ### Now mean absolute error -----------------------------------------------------------------------
 predictor2 = Predictor$new(stacked_models, data = test_importance, y = test$nfl_yards_game)
 imp_mae = FeatureImp$new(predictor2, loss = "mae")
 plot(imp_mae)
+
+ggsave("mae.png")
