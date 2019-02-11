@@ -19,13 +19,13 @@ stripped <- data %>%
 ### Machine learning model code -------------------------------------------------------------------
 set.seed(5568)
 
-### Create a test and train set -------------------------------------------------------------------
+### Create a test and train set
 inTrain <-
    createDataPartition(y = stripped$nfl_yards_game, p = .7, list = FALSE)
 train <- stripped[inTrain,]
 test <- stripped[-inTrain,]
 
-### The response variable and the number of folds are given ---------------------------------------
+### The response variable and the number of folds are given
 nfl_folds <- createFolds(train$nfl_yards_game, 10)
 
 nfl_control <- trainControl(
@@ -62,11 +62,11 @@ stacked_models <- caretStack(models, method = "glm")
 summary(stacked_models)
 
 ### Grab the predictions from the ensemble and check the r-squared and plot of predict against out
-###  of sample test data. Here 30% of the sample was held out.
+### of sample test data. Here 30% of the sample was held out.
 p <- predict(stacked_models, newdata = test)
 r_squared <- cor(p, test$nfl_yards_game)^2
 
-### Convert predict to dataframe for ggplot ----------------------------------------
+### Convert predict to dataframe for ggplot
 x = as.data.frame(p)
 
 ### Make a pretty picture -------------------------------------------------------------------------
@@ -90,12 +90,26 @@ ggplot(data = x, aes_string(x = x$p, y = test$nfl_yards_game)) +
 test_importance <- test %>%
    select(-nfl_yards_game)
 
-### Mean squared error first ----------------------------------------------------------------------
+### Mean squared error first
 predictor = Predictor$new(stacked_models, data = test_importance, y = test$nfl_yards_game)
 imp_mse = FeatureImp$new(predictor, loss = "mse")
 plot(imp_mse)
 
-### Now mean absolute error -----------------------------------------------------------------------
+### Now mean absolute error
 predictor2 = Predictor$new(stacked_models, data = test_importance, y = test$nfl_yards_game)
+imp_mae = FeatureImp$new(predictor2, loss = "mae")
+plot(imp_mae)
+
+### Compare to the feature importance of these stacked models for the training set. ---------------
+train_importance <- train %>%
+   select(-nfl_yards_game)
+
+### mse
+predictor = Predictor$new(stacked_models, data = train_importance, y = train$nfl_yards_game)
+imp_mse = FeatureImp$new(predictor, loss = "mse")
+plot(imp_mse)
+
+### mae
+predictor2 = Predictor$new(stacked_models, data = train_importance, y = train$nfl_yards_game)
 imp_mae = FeatureImp$new(predictor2, loss = "mae")
 plot(imp_mae)
